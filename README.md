@@ -9,7 +9,7 @@ ___
 
 I am part of the data science team at Spotify, currently working with the 
 marketing team before the launch of our new ML curated playlists, which are 
-themed for certain occasions (dinner, parties, work-outs, etc.). 
+themed for certain occasions (dinner, parties, workouts, etc.). 
 
 Our goal for this Q is to figure out a way to increase user engagement 
 with the new product. Because of the team's successful and unorthodox methods 
@@ -56,7 +56,9 @@ after the app is launched (the baseline will be the monthly increase for
 the previous year, to account for seasonal trends)
 * 2% decrease in churn for the subsequent 3 months (baseline will again be 
 the previous year's churn rates for the relevant months)
-* 5% increase in daily user engagement with Spotify's curated playlists
+* 5% increase in daily user engagement with Spotify's curated playlists (daily
+engagement defined as opening the curated playlist tab in the app at least 
+once per day)
 
 For all of these metrics we will do A/B testing on customers who have access 
 to the web app vs customers who don't. Since the percentage differences we 
@@ -65,21 +67,89 @@ but we work for Spotify, so that is a non-issue.
 
 ## Project Backlog
 ### Planning
-Initiative 1
-* Epic 1
-    + Story 1
-    + Story 2
-* Epic 2
+Initiative 1 - Verify that the overall idea and business metrics
+are both achievable and good enough for our stakeholders (Chloe and Fauste)
+* Epic 1 - Produce charter and backlog
+* Epic 2 - Find the required data for the model
+    + Story 1 - sourcing the SpotiPy API - https://spotipy.readthedocs.io/en/2.11.1/ - 
+    can serve both as source of playlists and audio features for the model
+    + Story 2 - LibROSA - https://librosa.github.io/librosa/index.html - can 
+    be used for audio features for offline .mp3 files
+    + Story 3 - The Playlist Miner - https://github.com/plamere/playlistminer OR
+    http://playlistminer.playlistmachinery.com/index.html - can provide either 
+    static playlists or if time permits the ability to generate playlists 
+    based on user input
+* Epic 3 - Agree on proposed ML/business metrics
+* Epic 4 - Replicate the playlist miner to generate playlists on the fly 
+and allow users to input their own search themes
 
-Initiative 2
-* Epic 1
-    + Story 1
-    + Story 2
-* Epic 2
+Initiative 2 - Building the playlist theme classification model 
+* Epic 1 - Data gathering and cleaning
+    + Story 1 - Getting SpotiPy authenticated
+    + Story 2 - Collecting the top 100 songs from all public playlists which
+    contain a thematic keyword in their names (i.e. finding all playlists 
+    which have "workout" in them and creating a list of the top 100 most 
+    commonly found songs) 
+    + Story 3 - Using SpotiPy to get the audio features for each song
+    + Story 4 - Reshaping the data into dataframe/matrix form, which
+    would easily allow me to run scikitlearn models 
+    + Story 5 - Saving data for predefined themes to .csv files (later to be
+    uploaded to S3 buckets)
+* Epic 2 - EDA and Feature Engineering
+    + Story 1 - Going over all audio features, standardizing the data (because
+    of different variable scales), fixing skewed data (logging), checking for 
+    outliers and missings (unlikely since data is from API)
+    + Story 2 - Creating new features (i.e., checking if features vary 
+    between song segments, max variation could be new feature)
+    + Story 3 - Bringing granularity back to song level (to ensure our model 
+    is modelling the correct thing)
+* Epic 3 - Testing various classification models 
+    + Story 1 - Testing logistic regression using CV
+    + Story 2 - Testing classification trees using CV 
+    + Story 3 - Testing boosted trees using CV
+    + Story 4 - Testing additional models    
+
+Initiative 3 - Building the "Playlist Predictor" webapp
+* Epic 1 - Create app frontend
+    + Story 1 - Create default site aesthetic using html/CSS
+    + Story 2 - Create search box prompting for song/artist combination
+    + Story 3 - Create output box, which shows which theme the song belongs to
+* Epic 2 - Uploading static data to S3 bucket
+* Epic 3 - Combining the frontend with the model 
+* Epic 4 - Adding additional input window, allowing the user to input custom 
+themes, which could later be the basis for the classification algorithm
+
+Initiative 4 - Deploying the webapp and testing performance
+* Epic 1 - Sampling users for both control and experiment groups
+* Epic 2 - Setting up the experiment to accurately measure our performance 
+metrics before deploying the webapp
+* Epic 3 - Deploying the webapp to the experiment group for 3 months
+* Epic 4 - Measuring success
 
 ### Backlog
+* Initiative1.Epic1 *planned (1)*
+* Initiative1.Epic2 *planned (2)*
+* Initiative1.Epic3 *planned (2)*
+* Initiative2.Epic1.Story1 *planned(1)*
+* Initiative2.Epic1.Story2 *planned(2)*
+* Initiative2.Epic1.Story3 *planned(2)*
+* Initiative2.Epic1.Story4 *planned(1)*
+* Initiative2.Epic1.Story5 *(1)*
+* Initiative2.Epic2.Story1 *(1)*
+* Initiative2.Epic2.Story2 *(2)*
+* Initiative2.Epic2.Story2 *(1)*
+
+
+
 
 ### Icebox
+* Initiative1.Epic4 
+* Initiative2.Epic3 (8)
+* Initiative3.Epic1 (8)
+* Initiative3.Epic2 (8)
+* Initiative3.Epic3 (8)
+* Initiative3.Epic4
+* Initiative4
 
 <!-- toc -->
 
