@@ -1,4 +1,85 @@
-# MSiA423 Template Repository
+# MSiA423 Playlist Predictor
+#### Project by Kristian Nikolov (knikolov2004)  
+#### QA by Joshua Khazanov (joshuakhazanov) 
+
+___
+
+## Project Charter
+### Background Scenario
+
+I am part of the data science team at Spotify, currently working with the 
+marketing team before the launch of our new ML curated playlists, which are 
+themed for certain occasions (dinner, parties, work-outs, etc.). 
+
+Our goal for this Q is to figure out a way to increase user engagement 
+with the new product. Because of the team's successful and unorthodox methods 
+in the past, we have been given full creative freedom to design whatever we see 
+fit, but have a very tight deadline - the end product has to be up and running in 9 weeks.
+
+### Vision
+Create an interesting and fun to use interactive tool, 
+which would ultimately showcase Spotify's in house playlists, 
+which will increase day-to-day user engagement. 
+
+The app can also lead to new customers
+and higher customer retention for Spotify.
+ 
+### Mission
+
+To showcase how great our models are at curating the playlists, we have 
+decided to let the user pick his own music, and let our model decide what 
+occasion it is best suited for.
+
+To do so, we will pick the 4 most commonly used themes for playlists (TBD), 
+find the top used songs for those themed playlists (based on publicly 
+accessible Spotify playlists), and build a model which classifies songs based
+on their audio features into one of the 4 themes.
+
+After the model has been built, we will deploy it in an easy to use webapp, 
+where users can input their favorite songs, which will then be classified to 
+one of the 4 predefined themes. 
+
+### Success Criteria
+1. ML Metrics
+* Our CV misclass rate when training the model is <10%
+* Our CV SSE standard deviation isn't wildly varying (signifying that our model 
+is very sensitive to the sample it is trained on). Ballpark estimate is less 
+than 10% variation between SSE's.
+* Model doesn't take more than 5 seconds to run (which would render the 
+app user unfriendly and lead to high churn rates)
+
+2. Business Metrics
+
+    The initiative can be considered a success if we observe: 
+* 0.5% increase in newly acquired users for the subsequent 3 months 
+after the app is launched (the baseline will be the monthly increase for 
+the previous year, to account for seasonal trends)
+* 2% decrease in churn for the subsequent 3 months (baseline will again be 
+the previous year's churn rates for the relevant months)
+* 5% increase in daily user engagement with Spotify's curated playlists
+
+For all of these metrics we will do A/B testing on customers who have access 
+to the web app vs customers who don't. Since the percentage differences we 
+are looking for are relatively small, we will need a pretty large sample size,
+but we work for Spotify, so that is a non-issue.
+
+## Project Backlog
+### Planning
+Initiative 1
+* Epic 1
+    + Story 1
+    + Story 2
+* Epic 2
+
+Initiative 2
+* Epic 1
+    + Story 1
+    + Story 2
+* Epic 2
+
+### Backlog
+
+### Icebox
 
 <!-- toc -->
 
