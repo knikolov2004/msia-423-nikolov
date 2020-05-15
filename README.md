@@ -153,22 +153,6 @@ metrics before deploying the webapp
 
 <!-- toc -->
 
-- [Directory structure](#directory-structure)
-- [Running the app](#running-the-app)
-  * [1. Initialize the database](#1-initialize-the-database)
-    + [Create the database with a single song](#create-the-database-with-a-single-song)
-    + [Adding additional songs](#adding-additional-songs)
-    + [Defining your engine string](#defining-your-engine-string)
-      - [Local SQLite database](#local-sqlite-database)
-  * [2. Configure Flask app](#2-configure-flask-app)
-  * [3. Run the Flask app](#3-run-the-flask-app)
-- [Running the app in Docker](#running-the-app-in-docker)
-  * [1. Build the image](#1-build-the-image)
-  * [2. Run the container](#2-run-the-container)
-  * [3. Kill the container](#3-kill-the-container)
-  * [Workaround for potential Docker problem for Windows.](#workaround-for-potential-docker-problem-for-windows)
-
-<!-- tocstop -->
 
 ## Directory structure 
 
@@ -222,11 +206,17 @@ Go to https://developer.spotify.com/dashboard/applications and log in with your 
 account (needed for Spotify integrations). When in, create an app (whatever name you want)
 and set the Client ID and Client Secret as environment variables.
 
+
+
 ### 2. Set up remaining env variables
 In `config/config.py`, all environment variables which are called with `os.getenv` need to be 
 set on the user's machine. These include:
 1. RDS variables - user, password, host, port, database; these need to be set up
 in the user's AWS console - for instructions visit https://github.com/MSIA/2020-msia423/blob/master/aws-rds/README.md
+
+    In order to check my RDS table, the port is `3306`, and the host is `nu-msia423-kris.cdeg4vxlquwj.us-east-2.rds.amazonaws.com`
+    For instructor purposes, the user is msia423instructors and the password is my netid.
+    For QA purposes, the user is msia423qa, and the password is my netid.
 
 2. S3 variables - AWS key ID, AWS secret key, S3 bucket; these are also set up in 
 the user's AWS console - go to "My Security Credentials" under your username in the top right corner.
@@ -245,6 +235,8 @@ This command builds the Docker image, with the tag `spotify_classifier`, based o
 and the files existing in this directory.
 
 ### 4. Running the API calls and RDS/S3 ingestion scripts
+*Note:* for this part of the setup to work, the user needs to be connected to
+NU's VPN via the GlobalProtect app, otherwise the connection to RDS cannot be made! 
 #### 1. Running outside of Docker
 To run the files without building the Docker image (this might break due to 
 missing packages which can be found in the `requirements.txt` file or other OS

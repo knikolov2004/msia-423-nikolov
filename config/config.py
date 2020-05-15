@@ -9,6 +9,9 @@ change the names of the environment variables on the machine this is being run o
 # Getting the parent directory of this file. That will function as the project home.
 # PROJECT_HOME = path.dirname(path.dirname(path.abspath(__file__)))
 
+# Logging
+LOGGING_CONFIG = "config/logging.conf"
+
 # SpotiPy variables
 SP_USER = "1295675405"  # this is my public user id, not a key and needs to be passed as an argument to use my playlists
 CID = os.getenv("spotipy_cid")

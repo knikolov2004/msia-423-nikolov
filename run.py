@@ -3,11 +3,13 @@ from src.upload_tracks import upload_all_tracks
 from src.create_db import set_up_rds
 
 
-
 if __name__ == '__main__':
     get_features()
     upload_all_tracks()
     set_up_rds()
+
+
+# NOT DELETING CODE BELOW SINCE IT MIGHT BE USEFUL FOR WEBAPP
 
 # import argparse
 #
