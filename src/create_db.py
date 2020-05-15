@@ -1,6 +1,6 @@
-import logging.config
-
-logger = logging.getLogger(__name__)
+import logging
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+logger = logging.getLogger(__file__)
 
 import sqlalchemy as sql
 from sqlalchemy.orm import sessionmaker
@@ -33,33 +33,30 @@ class Features(Base):
     analysis_url = Column(String(70), unique=True, nullable=False)
     duration_ms = Column(Integer, unique=False, nullable=False)
     time_signature = Column(Integer, unique=False, nullable=False)
+    playlist = Column(String(70), unique=False, nullable=False)
 
     def __repr__(self):
         return '<Features %r>' % self.id
 
+def set_up_rds():
+    # set up mysql connection
+    logger.info("Creating database:")
+    engine = sql.create_engine(ENGINE_STRING)
 
-# set up mysql connection
-engine = sql.create_engine(ENGINE_STRING)
+    # create the tracks table
+    Base.metadata.create_all(engine)
 
-# create the tracks table
-Base.metadata.create_all(engine)
-
-# UNCOMMENT THE CODE BELOW WHEN CODE THAT ADDS DATA IS INCORPORATED
-
-# # set up logging config
-# logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
-# logger = logging.getLogger(__file__)
-#
-# # create a db session
-# Session = sessionmaker(bind=engine)
-# session = Session()
-#
-# # delete from table if not empty
-# try:
-#     session.execute('''DELETE FROM features''')
-# except:
-#     pass
-#
-# # ADD CODE FOR ADDING DATA FROM JSON TO DB HERE
-#
-# session.close()
+    # create a db session
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    session.commit()
+    #
+    # delete from table if not empty
+    try:
+        session.execute('''DELETE FROM features''')
+    except:
+        pass
+    #
+    # # ADD CODE FOR ADDING DATA FROM JSON TO DB HERE
+    #
+    session.close()

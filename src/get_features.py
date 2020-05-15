@@ -5,8 +5,9 @@ from config.config import CID, SECRET, SP_USER, WORKOUT_PL, DINNER_PL, SLEEP_PL,
 from config.config import WORKOUT_RAW_LOCATION, DINNER_RAW_LOCATION, SLEEP_RAW_LOCATION, PARTY_RAW_LOCATION
 import json
 
-import logging.config
-logger = logging.getLogger(__name__)
+import logging
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+logger = logging.getLogger(__file__)
 
 client_credentials_manager = SpotifyClientCredentials(client_id=CID, client_secret=SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
@@ -52,12 +53,13 @@ def write_records(records, file_location):
         json.dump(records, output_file, indent=2)
 
 
-if __name__ == "__main__":
+def get_features():
     """
     The script fetches the target list of Spotify track URIs then iterates through the URIs to make a request for each
     URI to the Spotify features API. The resulting track features are persisted to a JSON file.
     """
-
+    logger.info("Getting tracks and features from Spotify API:")
+    logger.debug(WORKOUT_RAW_LOCATION)
     # Get track IDs for each playlist from Spotify API
     try:
         logger.debug("Fetching track ids")
