@@ -214,8 +214,8 @@ set on the user's machine. These include:
 1. RDS variables - user, password, host, port, database; these need to be set up
 in the user's AWS console - for instructions visit https://github.com/MSIA/2020-msia423/blob/master/aws-rds/README.md
 
-    In order to check my RDS table, the port is `3306`, and the host is `nu-msia423-kris.cdeg4vxlquwj.us-east-2.rds.amazonaws.com`
-    For instructor purposes, the user is msia423instructors and the password is my netid.
+    In order to check my RDS table, the port is `3306`, and the host is `see in Google Form`.
+    For instructor purposes, the user is msia423instructor and the password is my netid.
     For QA purposes, the user is msia423qa, and the password is my netid.
 
 2. S3 variables - AWS key ID, AWS secret key, S3 bucket; these are also set up in 
