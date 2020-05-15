@@ -1,14 +1,12 @@
 import sys
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-import logging.config
 from config.config import CID, SECRET, SP_USER, WORKOUT_PL, DINNER_PL, SLEEP_PL, PARTY_PL
 from config.config import WORKOUT_RAW_LOCATION, DINNER_RAW_LOCATION, SLEEP_RAW_LOCATION, PARTY_RAW_LOCATION
 import json
 
+import logging.config
 logger = logging.getLogger(__name__)
-# Setting logger to debug for QA testing
-logger.setLevel("DEBUG")
 
 client_credentials_manager = SpotifyClientCredentials(client_id=CID, client_secret=SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
