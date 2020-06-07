@@ -59,5 +59,13 @@ AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 S3_BUCKET = os.environ.get("S3_BUCKET")
 
-
-
+# modelling parameters
+training_features = [
+    'danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness',
+    'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo'
+]
+target_feature = ['playlist']
+test_size = 0.2
+random_state = 1337
+model_path = "models/lr.sav"
+confusion_path = "models/confusion.csv"
