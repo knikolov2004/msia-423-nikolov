@@ -10,10 +10,7 @@ from sqlalchemy import Column, Integer, Float, String, MetaData
 
 import pandas as pd
 
-from config.config import RDS_ENGINE_STRING
-from config.config import SQLITE_ENGINE_STRING, LOCAL_DB
-from config.config import DINNER_RAW_LOCATION, PARTY_RAW_LOCATION, SLEEP_RAW_LOCATION, WORKOUT_RAW_LOCATION
-
+import config.config as c
 Base = declarative_base()
 
 
@@ -27,7 +24,7 @@ class Features(Base):
     mode = Column(Integer, unique=False, nullable=False)
     speechiness = Column(Float, unique=False, nullable=False)
     acousticness = Column(Float, unique=False, nullable=False)
-    instrumentalness = Column(Float, unique=False, nullable=False)
+    instrumentalness = Column(Integer, unique=False, nullable=False)
     liveness = Column(Float, unique=False, nullable=False)
     valence = Column(Float, unique=False, nullable=False)
     tempo = Column(Float, unique=False, nullable=False)
@@ -39,6 +36,8 @@ class Features(Base):
     duration_ms = Column(Integer, unique=False, nullable=False)
     time_signature = Column(Integer, unique=False, nullable=False)
     playlist = Column(String(70), unique=False, nullable=False)
+    artist = Column(String(70), unique=False, nullable=False)
+    track = Column(String(70), unique=False, nullable=False)
 
     def __repr__(self):
         return '<Features %r>' % self.id
@@ -50,12 +49,12 @@ def set_up_rds():
     config file"""
     # set up mysql/sqllite connection
 
-    if not LOCAL_DB:
+    if c.LOCAL_DB == False:
         logger.info("Creating RDS database:")
-        engine = sql.create_engine(RDS_ENGINE_STRING)
+        engine = sql.create_engine(c.RDS_ENGINE_STRING)
     else:
         logger.info("Creating local SQLlite database")
-        engine = sql.create_engine(SQLITE_ENGINE_STRING)
+        engine = sql.create_engine(c.SQLITE_ENGINE_STRING)
 
     # create the tracks table
     Base.metadata.create_all(engine)
@@ -63,7 +62,7 @@ def set_up_rds():
     # create a db session
     Session = sessionmaker(bind=engine)
     session = Session()
-    session.commit()
+
     #
     # delete from table if not empty
     try:
@@ -73,4 +72,5 @@ def set_up_rds():
     #
     # raw_data = [DINNER_RAW_LOCATION, PARTY_RAW_LOCATION, SLEEP_RAW_LOCATION]
     #
+    session.commit()
     session.close()

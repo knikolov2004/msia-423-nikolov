@@ -7,37 +7,38 @@
 
 <body>
     <h3>
-         <a href = "{{ url_for('index') }}">Penny Lane Music Recommender</a>
+         <a href = "{{ url_for('index') }}">Spotify Playlist Classifier</a>
     </h3>
 
     <hr/>
     <table>
          <thead>
             <tr>
-               <th>Title</th>
-               <th>Artist</th>
-               <th>Album</th>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Playlist</th>
             </tr>
          </thead>
 
          <tbody>
-            {% for track in tracks %}
+            {% for track in features %}
                <tr>
-                   <td>{{ track.title }}</td>
+                   <td>{{ track.track }}</td>
                    <td>{{ track.artist }}</td>
-                   <td>{{ track.album }}</td>
+                   <td>{{ track.playlist }}</td>
                </tr>
             {% endfor %}
          </tbody>
       </table>
       <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
       <dl>
-        <input type=text size=15 name=title placeholder="Title">
-        <input type=text size=15 name=artist placeholder="Artist">
-        <input type=text size=15 name=album placeholder="Album">
+        <input type=text size=30 name=song_artist placeholder="Song and Artist">
+{#        <input type=text size=15 name=artist placeholder="Artist">#}
+{#        <input type=text size=15 name=album placeholder="Album">#}
         <input type=submit value=Add>
       </dl>
     </form>
+
 
 </body>
 </html>
