@@ -9,4 +9,4 @@ docker run -it --rm --mount type=bind,source="$(pwd)"/data,target=/data \
 --env spotipy_secret \
 --env aws_access_key_id \
 --env aws_secret_access_key \
-spotify_classifier run.py
+spotify_classifier ingestion.py

@@ -4,6 +4,7 @@ from src.create_db import set_up_rds
 
 
 if __name__ == '__main__':
+    """Runs the entire data ingestion and RDS creation pipeline when ran"""
     get_features()
     upload_all_tracks()
     set_up_rds()

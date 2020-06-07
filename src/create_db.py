@@ -1,4 +1,5 @@
 import logging
+
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 logger = logging.getLogger(__file__)
 
@@ -7,7 +8,11 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Float, String, MetaData
 
-from config.config import ENGINE_STRING
+import pandas as pd
+
+from config.config import RDS_ENGINE_STRING
+from config.config import SQLITE_ENGINE_STRING, LOCAL_DB
+from config.config import DINNER_RAW_LOCATION, PARTY_RAW_LOCATION, SLEEP_RAW_LOCATION, WORKOUT_RAW_LOCATION
 
 Base = declarative_base()
 
@@ -38,10 +43,19 @@ class Features(Base):
     def __repr__(self):
         return '<Features %r>' % self.id
 
+
+
 def set_up_rds():
-    # set up mysql connection
-    logger.info("Creating database:")
-    engine = sql.create_engine(ENGINE_STRING)
+    """Creates an database with the specified columns and datatypes, can be local SQLite or RDS - changed from
+    config file"""
+    # set up mysql/sqllite connection
+
+    if not LOCAL_DB:
+        logger.info("Creating RDS database:")
+        engine = sql.create_engine(RDS_ENGINE_STRING)
+    else:
+        logger.info("Creating local SQLlite database")
+        engine = sql.create_engine(SQLITE_ENGINE_STRING)
 
     # create the tracks table
     Base.metadata.create_all(engine)
@@ -57,6 +71,6 @@ def set_up_rds():
     except:
         pass
     #
-    # # ADD CODE FOR ADDING DATA FROM JSON TO DB HERE
+    # raw_data = [DINNER_RAW_LOCATION, PARTY_RAW_LOCATION, SLEEP_RAW_LOCATION]
     #
     session.close()

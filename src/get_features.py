@@ -1,15 +1,14 @@
 import sys
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from config.config import CID, SECRET, SP_USER, WORKOUT_PL, DINNER_PL, SLEEP_PL, PARTY_PL
-from config.config import WORKOUT_RAW_LOCATION, DINNER_RAW_LOCATION, SLEEP_RAW_LOCATION, PARTY_RAW_LOCATION
+import config.config as c
 import json
 
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 logger = logging.getLogger(__file__)
 
-client_credentials_manager = SpotifyClientCredentials(client_id=CID, client_secret=SECRET)
+client_credentials_manager = SpotifyClientCredentials(client_id=c.CID, client_secret=c.SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 sp.trace = False
 
@@ -48,9 +47,13 @@ def write_records(records, file_location):
 
     num_records = len(records)
     logger.debug("Writing {} records to {}".format(num_records, file_location))
-
-    with open(file_location, "w+") as output_file:
-        json.dump(records, output_file, indent=2)
+    try:
+        with open(file_location, "w+") as output_file:
+            json.dump(records, output_file, indent=2)
+        logger.info("%i features written to %s", num_records, c.PARTY_RAW_LOCATION)
+    except FileNotFoundError:
+        logger.error("Please provide a valid file location to persist data.")
+        sys.exit(1)
 
 
 def get_features():
@@ -59,14 +62,14 @@ def get_features():
     URI to the Spotify features API. The resulting track features are persisted to a JSON file.
     """
     logger.info("Getting tracks and features from Spotify API:")
-    logger.debug(WORKOUT_RAW_LOCATION)
+    logger.debug(c.WORKOUT_RAW_LOCATION)
     # Get track IDs for each playlist from Spotify API
     try:
         logger.debug("Fetching track ids")
-        workout_tracks = get_track_ids(SP_USER, WORKOUT_PL)
-        dinner_tracks = get_track_ids(SP_USER, DINNER_PL)
-        sleep_tracks = get_track_ids(SP_USER, SLEEP_PL)
-        party_tracks = get_track_ids(SP_USER, PARTY_PL)
+        workout_tracks = get_track_ids(c.SP_USER, c.WORKOUT_PL)
+        dinner_tracks = get_track_ids(c.SP_USER, c.DINNER_PL)
+        sleep_tracks = get_track_ids(c.SP_USER, c.SLEEP_PL)
+        party_tracks = get_track_ids(c.SP_USER, c.PARTY_PL)
     except Exception as e:
         logger.error("Error occurred while fetching track ids.", e)
         sys.exit(1)
@@ -78,30 +81,7 @@ def get_features():
     party_features = sp.audio_features(party_tracks)
 
     # Persist raw features to file
-    try:
-        write_records(workout_features, WORKOUT_RAW_LOCATION)
-        logger.info("%i workout_features written to %s", len(workout_features), WORKOUT_RAW_LOCATION)
-    except FileNotFoundError:
-        logger.error("Please provide a valid file location to persist data.")
-        sys.exit(1)
-
-    try:
-        write_records(dinner_features, DINNER_RAW_LOCATION)
-        logger.info("%i dinner_features written to %s", len(dinner_features), DINNER_RAW_LOCATION)
-    except FileNotFoundError:
-        logger.error("Please provide a valid file location to persist data.")
-        sys.exit(1)
-
-    try:
-        write_records(sleep_features, SLEEP_RAW_LOCATION)
-        logger.info("%i sleep_features written to %s", len(sleep_features), SLEEP_RAW_LOCATION)
-    except FileNotFoundError:
-        logger.error("Please provide a valid file location to persist data.")
-        sys.exit(1)
-
-    try:
-        write_records(party_features, PARTY_RAW_LOCATION)
-        logger.info("%i party_features written to %s", len(party_features), PARTY_RAW_LOCATION)
-    except FileNotFoundError:
-        logger.error("Please provide a valid file location to persist data.")
-        sys.exit(1)
+    write_records(workout_features, c.WORKOUT_RAW_LOCATION)
+    write_records(dinner_features, c.DINNER_RAW_LOCATION)
+    write_records(sleep_features, c.SLEEP_RAW_LOCATION)
+    write_records(party_features, c.PARTY_RAW_LOCATION)
