@@ -50,7 +50,7 @@ def write_records(records, file_location):
     try:
         with open(file_location, "w+") as output_file:
             json.dump(records, output_file, indent=2)
-        logger.info("%i features written to %s", num_records, c.PARTY_RAW_LOCATION)
+        logger.info("%i features written to %s", num_records, file_location)
     except FileNotFoundError:
         logger.error("Please provide a valid file location to persist data.")
         sys.exit(1)
@@ -70,6 +70,7 @@ def get_features():
         dinner_tracks = get_track_ids(c.SP_USER, c.DINNER_PL)
         sleep_tracks = get_track_ids(c.SP_USER, c.SLEEP_PL)
         party_tracks = get_track_ids(c.SP_USER, c.PARTY_PL)
+        chill_tracks = get_track_ids(c.SP_USER, c.CHILL_PL)
     except Exception as e:
         logger.error("Error occurred while fetching track ids.", e)
         sys.exit(1)
@@ -79,9 +80,11 @@ def get_features():
     dinner_features = sp.audio_features(dinner_tracks)
     sleep_features = sp.audio_features(sleep_tracks)
     party_features = sp.audio_features(party_tracks)
+    chill_features = sp.audio_features(chill_tracks)
 
     # Persist raw features to file
     write_records(workout_features, c.WORKOUT_RAW_LOCATION)
     write_records(dinner_features, c.DINNER_RAW_LOCATION)
     write_records(sleep_features, c.SLEEP_RAW_LOCATION)
     write_records(party_features, c.PARTY_RAW_LOCATION)
+    write_records(chill_features, c.CHILL_RAW_LOCATION)

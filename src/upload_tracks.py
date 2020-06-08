@@ -44,3 +44,4 @@ def upload_all_tracks():
     upload_data_to_s3(c.S3_BUCKET, c.SLEEP_RAW_LOCATION, c.SLEEP_RAW_DATA)
     upload_data_to_s3(c.S3_BUCKET, c.DINNER_RAW_LOCATION, c.DINNER_RAW_DATA)
     upload_data_to_s3(c.S3_BUCKET, c.PARTY_RAW_LOCATION, c.PARTY_RAW_DATA)
+    upload_data_to_s3(c.S3_BUCKET, c.CHILL_RAW_LOCATION, c.CHILL_RAW_DATA)

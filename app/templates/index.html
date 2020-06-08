@@ -1,18 +1,28 @@
+{% extends "bootstrap/base.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <link href="static/basic.css" rel="stylesheet">
 </head>
-
+{% block content %}
 <body>
-    <h3>
-         <a href = "{{ url_for('index') }}">Spotify Playlist Classifier</a>
-    </h3>
+    <div class="page-header">
+      <h1><a href = "{{ url_for('index') }}">Spotify Playlist Classifier</a></h1>
+    </div>
 
     <hr/>
-    <table>
-         <thead>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Easily classify your playlist by adding your song below!</div>
+        <div class="panel-body">
+            <p>You will need an active internet connection for the app to work. Just add your favorite song (and artist
+                if possible), and our model will quickly classify it based on its audio features:</p>
+        </div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
             <tr>
                 <th>Title</th>
                 <th>Artist</th>
@@ -29,16 +39,19 @@
                </tr>
             {% endfor %}
          </tbody>
-      </table>
+        </table>
+    </div>
+
       <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
       <dl>
         <input type=text size=30 name=song_artist placeholder="Song and Artist">
-{#        <input type=text size=15 name=artist placeholder="Artist">#}
-{#        <input type=text size=15 name=album placeholder="Album">#}
+
         <input type=submit value=Add>
       </dl>
     </form>
 
 
 </body>
+
+{% endblock %}
 </html>

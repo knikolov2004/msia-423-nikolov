@@ -10,9 +10,11 @@ import pandas as pd
 import pickle
 import config.config as c
 from src.train_model import scale_data
+from flask_bootstrap import Bootstrap
 
 # Initialize the Flask application
 app = Flask(__name__, template_folder="app/templates")
+Bootstrap(app)
 
 # Configure flask app from flask_config.py
 app.config.from_pyfile('config/flaskconfig.py')

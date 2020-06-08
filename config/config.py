@@ -23,6 +23,7 @@ WORKOUT_PL = "spotify:playlist:4C0Y70Mdqg6QuYhnlqNuZA"
 DINNER_PL = "spotify:playlist:6aJRmDld7QjkjVF5zr8kTs"
 SLEEP_PL = "spotify:playlist:7FKTT1OlLJe0GaQeG4WQW1"
 PARTY_PL = "spotify:playlist:1rarcCQFwY40JpfpVBqjNh"
+CHILL_PL = 'spotify:playlist:6u3RVmcw6KHqzgL8xyedGf'
 audio_feature_names = [
     'danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness',
     'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo', 'type',
@@ -34,10 +35,12 @@ WORKOUT_RAW_DATA = "workout_features.json"
 DINNER_RAW_DATA = "dinner_features.json"
 SLEEP_RAW_DATA = "sleep_features.json"
 PARTY_RAW_DATA = "party_features.json"
+CHILL_RAW_DATA = "chill_features.json"
 WORKOUT_RAW_LOCATION = path.join('data/', WORKOUT_RAW_DATA)
 DINNER_RAW_LOCATION = path.join('data/', DINNER_RAW_DATA)
 SLEEP_RAW_LOCATION = path.join('data/', SLEEP_RAW_DATA)
 PARTY_RAW_LOCATION = path.join('data/', PARTY_RAW_DATA)
+CHILL_RAW_LOCATION = path.join('data/', CHILL_RAW_DATA)
 FEATURES_RAW_LOCATION = "data/features.csv"
 
 # RDS variables
@@ -69,3 +72,7 @@ test_size = 0.2
 random_state = 1337
 model_path = "models/lr.sav"
 confusion_path = "models/confusion.csv"
+# confusion_actual_columns = ['Actual dinner','Actual party', 'Actual sleep', 'Actual Workout']
+# confusion_predicted_columns = ['Predicted dinner', 'Predicted party', 'Predicted sleep', 'Predicted Workout']
+confusion_actual_columns = ['Actual party', 'Actual chill']
+confusion_predicted_columns = ['Predicted party', 'Predicted chill']

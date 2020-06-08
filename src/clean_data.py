@@ -33,12 +33,13 @@ def json_to_df(testjson, newcol):
 
 def create_feature_df():
     logger.info("Creating database")
-    # adding the 4 jsons to one dataframe with a new playlist column
+    # adding the 2 jsons to one dataframe with a new playlist column
     features = pd.DataFrame(columns=c.audio_feature_names)
-    raw_data = [c.DINNER_RAW_DATA, c.PARTY_RAW_DATA, c.SLEEP_RAW_DATA, c.WORKOUT_RAW_DATA]
+    # raw_data = [c.DINNER_RAW_DATA, c.PARTY_RAW_DATA, c.SLEEP_RAW_DATA, c.WORKOUT_RAW_DATA]
+    raw_data = [c.PARTY_RAW_DATA, c.CHILL_RAW_DATA]
     for file in raw_data:
         data = read_json_s3(c.S3_BUCKET, file)
-        df = json_to_df(data, re.search("(.*)_", file).group(1))
+        df = json_to_df(data, re.search("(.*)_", file).group(1).capitalize())
         features = features.append(df).reset_index().drop('index', axis=1)
     features.to_csv(c.FEATURES_RAW_LOCATION, index=False)
     return features

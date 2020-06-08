@@ -64,15 +64,22 @@ def train_model(model_dataframe):
         logger.error("Cannot save model - check if model exists and if path is correct")
 
     # fitting the model on test set
-    ypred_proba_test = lr.predict_proba(X_test)[:, 1]
+    # ypred_proba_test = lr.predict_proba(X_test)[:, 1]
     ypred_bin_test = lr.predict(X_test)
 
     # getting model results
     confusion = sklearn.metrics.confusion_matrix(y_test, ypred_bin_test)
     accuracy = sklearn.metrics.accuracy_score(y_test, ypred_bin_test)
     logger.info('Accuracy on test: %0.3f' % accuracy)
+    index = []
+    columns = []
+    for i in model_dataframe.playlist.unique():
+        actual = str('Actual ' + i)
+        predicted = str('Predicted ' + i)
+        index.append(actual)
+        columns.append(predicted)
     pd.DataFrame(confusion,
-                  index=['Actual dinner','Actual party', 'Actual sleep', 'Actual Workout'],
-                  columns=['Predicted dinner', 'Predicted party', 'Predicted sleep', 'Predicted Workout'])\
+                  index=index,
+                  columns=columns)\
         .to_csv(c.confusion_path)
 
