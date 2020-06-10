@@ -7,8 +7,7 @@ import boto3
 from botocore.exceptions import ClientError
 import config.config as c
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
-logger = logging.getLogger(__file__)
+logger = logging.getLogger(__name__)
 
 
 try:
@@ -32,7 +31,7 @@ def json_to_df(testjson, newcol):
 
 
 def create_feature_df():
-    logger.info("Creating database")
+    logger.info("Creating dataframe")
     # adding the 2 jsons to one dataframe with a new playlist column
     features = pd.DataFrame(columns=c.audio_feature_names)
     # raw_data = [c.DINNER_RAW_DATA, c.PARTY_RAW_DATA, c.SLEEP_RAW_DATA, c.WORKOUT_RAW_DATA]

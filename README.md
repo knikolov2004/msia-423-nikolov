@@ -250,7 +250,7 @@ S3 and creates and populates and RDS database with the 4 files.
 #### 2. Running in Docker
 To run the docker container from this directory, just run:
 
-`sh run_docker.sh` (you may need to add `winpty` in front if running from Git Bash 
+`sh run_ingestion.sh` (you may need to add `winpty` in front if running from Git Bash 
 on Windows)
 
 This shell file contains the full command needed to import the system's environment

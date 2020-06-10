@@ -1,7 +1,6 @@
 import logging
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
-logger = logging.getLogger(__file__)
+logger = logging.getLogger(__name__)
 
 import sqlalchemy as sql
 from sqlalchemy.orm import sessionmaker

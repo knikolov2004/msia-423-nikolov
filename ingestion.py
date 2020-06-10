@@ -1,7 +1,10 @@
 from src.get_features import get_features
 from src.upload_tracks import upload_all_tracks
 from src.create_db import set_up_rds
+import logging
 
+logging.basicConfig(format='%(name)-12s %(levelname)-8s %(message)s', level=logging.INFO)
+logger = logging.getLogger('ingestion')
 
 if __name__ == '__main__':
     """Runs the entire data ingestion and RDS creation pipeline when ran"""

@@ -1,18 +1,14 @@
 import pandas as pd
-import numpy as np
-import json
 
 import sklearn
 from sklearn.preprocessing import StandardScaler
 from sklearn import model_selection
 from sklearn import linear_model
-from sklearn import metrics
 import pickle
 import logging
 import config.config as c
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
-logger = logging.getLogger(__file__)
+logger = logging.getLogger(__name__)
 
 def fit_scaler(dataframe):
     """

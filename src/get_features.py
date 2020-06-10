@@ -3,10 +3,9 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import config.config as c
 import json
-
 import logging
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
-logger = logging.getLogger(__file__)
+
+logger = logging.getLogger(__name__)
 
 client_credentials_manager = SpotifyClientCredentials(client_id=c.CID, client_secret=c.SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
