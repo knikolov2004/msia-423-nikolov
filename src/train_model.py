@@ -39,6 +39,15 @@ def scale_data(dataframe, array):
 
 
 def train_model(model_dataframe, output = c.model_path):
+    """
+    Trains logistic regression on spotify features dataframe with target playlist
+    Args:
+        model_dataframe: Spotify playlist dataframe with required spotify features and target playlist column
+        output: logistic regression model
+
+    Returns: nothing
+
+    """
     # standardizing the features we will be using for modelling
     features = scale_data(model_dataframe[c.training_features], model_dataframe[c.training_features])
 
@@ -75,6 +84,5 @@ def train_model(model_dataframe, output = c.model_path):
         columns.append(predicted)
     pd.DataFrame(confusion,
                   index=index,
-                  columns=columns)\
-        .to_csv(c.confusion_path)
+                  columns=columns).to_csv(c.confusion_path)
 

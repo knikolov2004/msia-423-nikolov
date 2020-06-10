@@ -34,7 +34,7 @@ db = SQLAlchemy(app)
 def index():
     """Main view that lists songs in the database.
 
-    Create view into index page that uses data queried from Track database and
+    Create view into index page that uses data queried from Features database and
     inserts it into the app/templates/index.html template.
 
     Returns: rendered html template

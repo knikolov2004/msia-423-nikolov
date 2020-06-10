@@ -200,7 +200,7 @@ metrics before deploying the webapp
 ├── requirements.txt                  <- Python package dependencies 
 ```
 
-## Running the app
+## Running the project
 ### 1. Set up SpotiPy credentials
 Go to https://developer.spotify.com/dashboard/applications and log in with your Spotify
 account (needed for Spotify integrations). When in, create an app (whatever name you want)
@@ -223,7 +223,7 @@ the user's AWS console - go to "My Security Credentials" under your username in 
 Press Create Access Key . Save your AWS Access Key ID and AWS Secret Access Key as env variables, and 
 change the S3 bucket name with your own bucket.
 
-### 3. Setting up the Docker image
+### 3. Setting up the Docker image for ingestion and modelling
 The Dockerfile for running the API call and ingestion scripts is in the home (current) folder. 
 To build the image, run from this directory (the root of the repo): 
 
@@ -231,7 +231,7 @@ To build the image, run from this directory (the root of the repo):
  docker build -t spotify_classifier .
 ```
 
-This command builds the Docker image, with the tag `spotify_classifier`, based on the instructions in `Dockerfile` 
+This command builds the Docker image, with the tag `spotify_classifier`, based on the instructions in the `Dockerfile` 
 and the files existing in this directory.
 
 ### 4. Running the API calls and RDS/S3 ingestion scripts
@@ -242,7 +242,7 @@ To run the files without building the Docker image (this might break due to
 missing packages which can be found in the `requirements.txt` file or other OS
 specific differences) just run from this directory:
 
-`python run.py`
+`python ingestion.py`
 
 This creates 4 raw data files in the `data` folder, uploads the raw data files to
 S3 and creates and populates and RDS database with the 4 files.
@@ -250,11 +250,59 @@ S3 and creates and populates and RDS database with the 4 files.
 #### 2. Running in Docker
 To run the docker container from this directory, just run:
 
-`sh run_ingestion.sh` (you may need to add `winpty` in front if running from Git Bash 
-on Windows)
+`sh run_ingestion.sh` (you may need to remove `winpty` from the bash script if 
+not on windows)
 
 This shell file contains the full command needed to import the system's environment
 variables and run the docker container. 
 
 This also creates 4 raw data files in the `data` folder, uploads the raw data files to
 S3 and creates and populates and RDS database with the 4 files.
+
+### 5. Running the modelling
+#### 1. Running outside of Docker
+To run the files without building the Docker image (this might break due to 
+missing packages which can be found in the `requirements.txt` file or other OS
+specific differences) just run from this directory:
+
+`python modelling.py`
+
+#### 2. Running in Docker
+To run the docker container from this directory, just run:
+
+`sh run_modelling.sh` (you may need to remove `winpty` from the bash script if 
+not on windows)
+
+This shell file contains the full command needed to import the system's environment
+variables and run the docker container. 
+
+This creates 2 files in the models folder - 1 model file `lr.sav`, and one 
+confusion matrix `confusion.csv`. To change the input and output path for the 
+modelling, you can add `--input` and `--output` arguments to the script at the end.
+
+### 6. Setting up the Docker image for ingestion and modelling
+
+The Dockerfile for running the API call and ingestion scripts is in the app folder. 
+To build the image, run from this directory (the root of the repo):
+```bash
+ docker build -f app/Dockerfile -t spotify_playlist_app .
+```
+
+This command builds the Docker image, with the tag spotify_playlist_app, 
+based on the instructions in the Dockerfile and the files existing in this directory.
+
+### 7. Running the webapp
+
+To run the webapp, just run:
+
+`sh app/run_webapp.sh`. If on Windows, you can access the app on http://127.0.0.1:5000/, 
+otherwise you can access on http://0.0.0.0:5000/. When you are done using the app, 
+run `sh app/kill_webapp.sh` to kill the docker container (thus ensuring you can
+rerun the run script without having to change the image name).
+
+### 8. Unit tests
+
+To run the unit tests, just run:
+```bash
+docker run spotify_classifier unit_tests.py
+```
