@@ -6,9 +6,7 @@ logger = logging.getLogger(__file__)
 import sqlalchemy as sql
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, Float, String, MetaData
-
-import pandas as pd
+from sqlalchemy import Column, Integer, Float, String
 
 import config.config as c
 Base = declarative_base()
@@ -47,14 +45,20 @@ class Features(Base):
 def set_up_rds():
     """Creates an database with the specified columns and datatypes, can be local SQLite or RDS - changed from
     config file"""
-    # set up mysql/sqllite connection
+    # set up mysql/sqlite connection
 
     if c.LOCAL_DB == False:
         logger.info("Creating RDS database:")
-        engine = sql.create_engine(c.RDS_ENGINE_STRING)
+        try:
+            engine = sql.create_engine(c.RDS_ENGINE_STRING)
+        except:
+            logger.error("Cannot create RDS database. Check to make sure you are on NU's VPN!")
     else:
         logger.info("Creating local SQLlite database")
-        engine = sql.create_engine(c.SQLITE_ENGINE_STRING)
+        try:
+            engine = sql.create_engine(c.SQLITE_ENGINE_STRING)
+        except:
+            logger.error("Cannot create local database. Check if path specified exists.")
 
     # create the tracks table
     Base.metadata.create_all(engine)
@@ -63,14 +67,12 @@ def set_up_rds():
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    #
     # delete from table if not empty
     try:
         session.execute('''DELETE FROM features''')
     except:
         pass
-    #
-    # raw_data = [DINNER_RAW_LOCATION, PARTY_RAW_LOCATION, SLEEP_RAW_LOCATION]
-    #
+
     session.commit()
+    logger.info("Database successfully created!")
     session.close()

@@ -53,7 +53,7 @@ conn_type = "mysql+pymysql"
 RDS_ENGINE_STRING = "{}://{}:{}@{}:{}/{}".format(conn_type, user, password, host, port, database)
 
 # SQLITE variables
-LOCAL_DB = True # Change to True if you want it to write to local database instead of RDS
+LOCAL_DB = False # Change to True if you want it to write to local database instead of RDS
 SQLITE_PATH = 'data/msia423_spotify_features.db'
 SQLITE_ENGINE_STRING = "sqlite:///"+SQLITE_PATH
 

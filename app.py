@@ -11,6 +11,7 @@ import pickle
 import config.config as c
 from src.train_model import scale_data
 from flask_bootstrap import Bootstrap
+import sklearn
 
 # Initialize the Flask application
 app = Flask(__name__, template_folder="app/templates")

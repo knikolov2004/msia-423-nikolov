@@ -64,7 +64,6 @@ def train_model(model_dataframe):
         logger.error("Cannot save model - check if model exists and if path is correct")
 
     # fitting the model on test set
-    # ypred_proba_test = lr.predict_proba(X_test)[:, 1]
     ypred_bin_test = lr.predict(X_test)
 
     # getting model results
