@@ -280,7 +280,7 @@ This creates 2 files in the models folder - 1 model file `lr.sav`, and one
 confusion matrix `confusion.csv`. To change the input and output path for the 
 modelling, you can add `--input` and `--output` arguments to the script at the end.
 
-### 6. Setting up the Docker image for ingestion and modelling
+### 6. Setting up the Docker image for the web app
 
 The Dockerfile for running the API call and ingestion scripts is in the app folder. 
 To build the image, run from this directory (the root of the repo):
@@ -291,7 +291,7 @@ To build the image, run from this directory (the root of the repo):
 This command builds the Docker image, with the tag spotify_playlist_app, 
 based on the instructions in the Dockerfile and the files existing in this directory.
 
-### 7. Running the webapp
+### 7. Running the web app
 
 To run the webapp, just run:
 

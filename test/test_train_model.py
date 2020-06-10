@@ -1,7 +1,6 @@
 from src.train_model import fit_scaler, scale_data
 import pandas as pd
 import numpy as np
-import config.config as c
 
 import logging
 logger = logging.getLogger(__name__)

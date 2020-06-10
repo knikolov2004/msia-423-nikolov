@@ -50,7 +50,9 @@ host = os.environ.get("MYSQL_HOST")
 port = os.environ.get("MYSQL_PORT")
 database = os.getenv("DATABASE_NAME")
 conn_type = "mysql+pymysql"
-RDS_ENGINE_STRING = "{}://{}:{}@{}:{}/{}".format(conn_type, user, password, host, port, database)
+SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
+if SQLALCHEMY_DATABASE_URI is None:
+    SQLALCHEMY_DATABASE_URI = "{}://{}:{}@{}:{}/{}".format(conn_type, user, password, host, port, database)
 
 # SQLITE variables
 LOCAL_DB = False # Change to True if you want it to write to local database instead of RDS
@@ -61,6 +63,8 @@ SQLITE_ENGINE_STRING = "sqlite:///"+SQLITE_PATH
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 S3_BUCKET = os.environ.get("S3_BUCKET")
+if S3_BUCKET is None:
+    S3_BUCKET = 'nw-kristian-nikolov-s3'
 
 # modeling parameters
 training_features = [

@@ -49,7 +49,7 @@ def set_up_rds():
     if c.LOCAL_DB == False:
         logger.info("Creating RDS database:")
         try:
-            engine = sql.create_engine(c.RDS_ENGINE_STRING)
+            engine = sql.create_engine(c.SQLALCHEMY_DATABASE_URI)
         except:
             logger.error("Cannot create RDS database. Check to make sure you are on NU's VPN!")
     else:

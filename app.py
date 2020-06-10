@@ -11,7 +11,6 @@ import pickle
 import config.config as c
 from src.train_model import scale_data
 from flask_bootstrap import Bootstrap
-import sklearn
 
 # Initialize the Flask application
 app = Flask(__name__, template_folder="app/templates")
@@ -115,9 +114,6 @@ def add_entry():
     db.session.commit()
     logger.info("New song added: %s by %s", track, artist)
     return redirect(url_for('index'))
-    # except:
-    #     logger.warning("Not able to display tracks, error page returned")
-    #     return render_template('error.html')
 
 
 if __name__ == '__main__':
