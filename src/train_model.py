@@ -38,7 +38,7 @@ def scale_data(dataframe, array):
     return (array - scaler.mean_) / (scaler.var_ ** 0.5)
 
 
-def train_model(model_dataframe):
+def train_model(model_dataframe, output = c.model_path):
     # standardizing the features we will be using for modelling
     features = scale_data(model_dataframe[c.training_features], model_dataframe[c.training_features])
 
@@ -54,7 +54,7 @@ def train_model(model_dataframe):
     # saving the model to later use later on new data in the webapp
     logger.info("Saving model")
     try:
-        pickle.dump(lr, open(c.model_path, 'wb'))
+        pickle.dump(lr, open(output, 'wb'))
         logger.info("Model saved successfully")
     except:
         logger.error("Cannot save model - check if model exists and if path is correct")
